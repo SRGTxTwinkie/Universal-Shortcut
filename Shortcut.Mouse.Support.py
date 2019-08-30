@@ -1,17 +1,24 @@
-import subprocess, pyautogui, os
-from tkinter import *
+import subprocess, pyautogui, os, time
+import tkinter as tk
+
 
 class values:
     x = ''
-    top = Tk()
+    top = tk.Tk()
+    var = tk.StringVar()
     realWebsite = True
+    E1 = ''
+    custom = False
+    var = tk.StringVar()
 
 def ping():
+    print(values.x)
     ip = os.system('ping www.' + values.x + '.com -n 1 >>text.txt') ### Uses bach to ping website to make sure it exists
     if ip == 0:
-        return
-    else:
         values.realWebsite = False
+    else:
+        values.realWebsite = True
+        return
         
 
 def windowOpen():
@@ -51,14 +58,45 @@ def reddit():
 def youtube():
     values.x = 'youtube'
     ping()
-    windowOpen()
-    pyautogui.typewrite('https://' + 'youtube' + '.com')
-    pyautogui.press('enter')
-    print('...Done')    
+    if values.realWebsite == True:
+        print('Website Unavailible')
+        return
+    else:
+        windowOpen()
+        pyautogui.typewrite('https://' + 'youtube' + '.com')
+        pyautogui.press('enter')
+        print('...Done')
 
-reddit = Button(text = 'Reddit', command = reddit)
-youtube = Button(text = 'Youtube', command = youtube)
+def custom():
+    L1 = tk.Label(values.top, text="Gimme dat link: ")
+    L1.pack()
+    values.E1 = tk.Entry(values.top, textvariable = values.var)
+    values.E1.pack()
+    go = tk.Button(text = 'Go!', command = customString)
+    go.pack()
+    
+    
+    
+
+def customString():
+    values.x = values.E1.get()
+    ping()
+    if values.realWebsite == True:
+        print('Website Unavailible')
+        return
+    else:
+        windowOpen()
+        pyautogui.typewrite('https://' + values.x + '.com')
+        pyautogui.press('enter')
+        print('...Done')
+        values.custom = False
+
+
+reddit = tk.Button(text = 'Reddit', command = reddit)
+youtube = tk.Button(text = 'Youtube', command = youtube)
+custom = tk.Button(text = 'Custom', command = custom)
 reddit.pack()
 youtube.pack()
+custom.pack()
 values.top.mainloop()
 
