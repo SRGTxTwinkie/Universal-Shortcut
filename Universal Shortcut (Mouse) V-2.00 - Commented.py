@@ -58,14 +58,14 @@ def reddit(): ###This and Youtube are the same, customString() is the only one t
         return
     else:
         windowOpen()
-        time.sleep(.5)
+        time.sleep(.5) ### You gotta wait like .5 seconds because for some reason it stopped working before I put it in, just randomly
         pyautogui.typewrite('https://' + 'old.reddit' + '.com')
         pyautogui.press('enter')
         print('...Done')
 
 
 
-def youtube():
+def youtube(): ### Same as Reddit, exactly
     values.x = 'youtube'
     ping()
     if values.realWebsite == False:
@@ -81,35 +81,36 @@ def youtube():
 
 def custom(): ### Oh doggy, does this control the custom URL
     L1 = tk.Label(values.top, text="Gimme dat link: ") ### This is the Label for the Text Box, Kinda unessicary
-    L1.pack()
-    values.E1 = tk.Entry(values.top, textvariable = values.var)
-    values.E1.pack()
-    go = tk.Button(text = 'Go!', command = customString)
+    L1.pack() ### Still don't know what tk Pack(), reallly wish I did.
+    values.E1 = tk.Entry(values.top, textvariable = values.var) ### This is where the textbox that you type in is.
+    values.E1.pack() ### Really wish I knew what pack() did.
+    go = tk.Button(text = 'Go!', command = customString) ### sudo Enter key cuz I can't be fucked to find a good listener library
     go.pack()
 
-def customString():
-    values.x = values.E1.get()
+def customString(): ### Jesus this was a giant pain in the ass. This is like the other 2, but this has a little more meat ---
+                    ### including a whole ass nother' fucntion that controls whether this one even works.
+    values.x = values.E1.get() ### This is where the tk.Stringvar() comes in, because E1 is a stringvar, python can get a real string from E1
     ping()
     if values.realWebsite == True:
-        if values.suffix == '':
+        if values.suffix == '': ### If .org and .com don't work no suffix is assigned and it errors out. 
             print('Website Unavailible')
             return
         windowOpen()
         time.sleep(.5)
-        pyautogui.typewrite('https://' + values.x + values.suffix)
+        pyautogui.typewrite('https://' + values.x + values.suffix) ### Only place suffix is used lol
         pyautogui.press('enter')
         print('...Done')
         values.custom = False
-    else:
+    else: ### Standard ass Error checking
         print('Website Unavailible')
         return
 
     
-reddit = tk.Button(text = 'Reddit', command = reddit)
-youtube = tk.Button(text = 'Youtube', command = youtube)
-custom = tk.Button(text = 'Custom', command = custom)
+reddit = tk.Button(text = 'Reddit', command = reddit) ###}
+youtube = tk.Button(text = 'Youtube', command = youtube)###}} These are the buttons, and they just link to the functions, they call em' you could say
+custom = tk.Button(text = 'Custom', command = custom)###}
 reddit.pack()
 youtube.pack()
 custom.pack()
-values.top.mainloop()
+values.top.mainloop() ### Wish I knew what mainloop() did, all I know is that it makes the tk library work
 
